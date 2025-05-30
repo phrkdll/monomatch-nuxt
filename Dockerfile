@@ -1,5 +1,5 @@
 # Build stage
-FROM node:22-alpine AS build
+FROM node:slim AS build
 WORKDIR /app
 
 RUN corepack enable
@@ -17,15 +17,15 @@ COPY . ./
 RUN npm run build
 
 # Run stage
-FROM node:22-alpine
+FROM node:slim
 WORKDIR /app
 
 # Only `.output` folder is needed from the build stage
 COPY --from=build /app/.output/ ./
 
 # Change the port and host
-ENV PORT 80
-ENV HOST 0.0.0.0
+ENV PORT=80
+ENV HOST=0.0.0.0
 
 EXPOSE 80
 

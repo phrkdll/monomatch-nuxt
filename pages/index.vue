@@ -1,23 +1,18 @@
 <script setup lang="ts">
-const isDialogOpen = ref(false)
-const busy = ref(false)
+const isDialogOpen = ref(false);
+const busy = ref(false);
 
-const api = useRuntimeConfig().public.API_BASE_URL
+const api = useRuntimeConfig().public.API_URL;
 
-const name = ref("")
+const name = ref("");
 
-function openDialog() {
-	isDialogOpen.value = true
-}
-
-function closeDialog() {
-	isDialogOpen.value = false
-}
+const openDialog = () => isDialogOpen.value = true;
+const closeDialog = () => isDialogOpen.value = false;
 
 async function onSubmit() {
-	const syms: string[] = []
+	const syms: string[] = [];
 	for (let i = 0; i < 57; i++) {
-		syms.push((i + 1).toString())
+		syms.push((i + 1).toString());
 	}
 
 	const res = await $fetch(api + "session/create", {
@@ -26,29 +21,23 @@ async function onSubmit() {
 			sessionName: name.value.toString(),
 			symbols: syms,
 		},
-	})
+	});
 
-	const data: CreateSessionResponse = JSON.parse(res)
+	const data: CreateSessionResponse = JSON.parse(res);
 
-	navigateTo(`session/${data.id}`)
-	closeDialog()
+	navigateTo(`session/${data.id}`);
+	closeDialog();
 }
 </script>
 
 <template>
 	<div>
-		<article
-			class="w-96 mx-auto"
-			:aria-busy="busy"
-		>
+		<article class="w-96 mx-auto" :aria-busy="busy">
 			<header>Welcome to monomatch!</header>
 			A simple, yet flexible symbol matching game.
 
 			<footer class="flex flex-col gap-2">
-				<button
-					class="w-full"
-					@click="openDialog"
-				>
+				<button class="w-full" @click="openDialog">
 					Create room
 				</button>
 				<button class="w-full">
@@ -57,27 +46,15 @@ async function onSubmit() {
 			</footer>
 		</article>
 		<Transition>
-			<dialog
-				v-if="isDialogOpen"
-				open
-			>
+			<dialog v-if="isDialogOpen" open>
 				<form @submit.prevent="onSubmit">
 					<article class="w-96">
 						<header>Create room</header>
 
-						<input
-							v-model="name"
-							v-focus
-							type="text"
-							placeholder="Session name"
-						>
+						<input v-model="name" v-focus type="text" placeholder="Session name">
 
 						<select>
-							<option
-								selected
-								disabled
-								value=""
-							>
+							<option selected disabled value="">
 								Select preset...
 							</option>
 							<option value="bands">
@@ -91,11 +68,7 @@ async function onSubmit() {
 							<button class="w-full">
 								Create
 							</button>
-							<button
-								type="button"
-								class="w-full"
-								@click="closeDialog"
-							>
+							<button type="button" class="w-full" @click="closeDialog">
 								Cancel
 							</button>
 						</footer>
@@ -109,11 +82,11 @@ async function onSubmit() {
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-    transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-    opacity: 0;
+	opacity: 0;
 }
 </style>
