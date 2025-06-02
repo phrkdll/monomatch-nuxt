@@ -25,9 +25,4 @@ export default defineNuxtConfig({
 			},
 		},
 	},
-	security: {
-		headers: {
-			referrerPolicy: "unsafe-url",
-		},
-	},
 })
