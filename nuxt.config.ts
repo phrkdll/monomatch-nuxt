@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	modules: ["@nuxt/eslint", "@nuxt/icon", "@nuxtjs/tailwindcss", "@pinia/nuxt"],
+	modules: [
+		"@nuxt/eslint",
+		"@nuxt/icon",
+		"@nuxtjs/tailwindcss",
+		"@pinia/nuxt",
+		"nuxt-security",
+	],
 	devtools: { enabled: true },
 	css: ["@picocss/pico/css/pico.amber.min.css"],
 	runtimeConfig: {
@@ -16,6 +22,13 @@ export default defineNuxtConfig({
 				quotes: "double",
 				commaDangle: "always-multiline",
 				indent: "tab",
+			},
+		},
+	},
+	security: {
+		headers: {
+			contentSecurityPolicy: {
+				"upgrade-insecure-requests": true,
 			},
 		},
 	},
