@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { CreateSessionResponse } from "~/types/session/create"
+
 const isDialogOpen = ref(false)
 const busy = ref(false)
 
-const api = useRuntimeConfig().public.API_BASE_URL
+const api = useRuntimeConfig().public.apiBaseUrl
 
 const name = ref("")
 
@@ -20,7 +22,7 @@ async function onSubmit() {
 		syms.push((i + 1).toString())
 	}
 
-	const res = await $fetch(api + "session/create", {
+	const { data } = await useFetch<CreateSessionResponse>(api + "session/create", {
 		method: "POST",
 		body: {
 			sessionName: name.value.toString(),
@@ -28,9 +30,9 @@ async function onSubmit() {
 		},
 	})
 
-	const data: CreateSessionResponse = JSON.parse(res)
-
-	navigateTo(`session/${data.id}`)
+	if (data.value) {
+		navigateTo(`session/${data.value?.id}`)
+	}
 	closeDialog()
 }
 </script>
@@ -109,11 +111,11 @@ async function onSubmit() {
 <style scoped>
 .v-enter-active,
 .v-leave-active {
-    transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
-    opacity: 0;
+	opacity: 0;
 }
 </style>

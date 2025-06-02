@@ -5,7 +5,7 @@ export default defineNuxtConfig({
 	css: ["@picocss/pico/css/pico.amber.min.css"],
 	runtimeConfig: {
 		public: {
-			API_BASE_URL: process.env.API_BASE_URL,
+			apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
 		},
 	},
 	compatibilityDate: "2025-05-15",
