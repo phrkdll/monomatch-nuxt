@@ -8,13 +8,8 @@ const api = useRuntimeConfig().public.apiBaseUrl
 
 const name = ref("")
 
-function openDialog() {
-	isDialogOpen.value = true
-}
-
-function closeDialog() {
-	isDialogOpen.value = false
-}
+const openDialog = () => isDialogOpen.value = true
+const closeDialog = () => isDialogOpen.value = false
 
 async function onSubmit() {
 	const syms: string[] = []
@@ -112,10 +107,12 @@ async function onSubmit() {
 .v-enter-active,
 .v-leave-active {
 	transition: opacity 0.5s ease;
+	transition: opacity 0.5s ease;
 }
 
 .v-enter-from,
 .v-leave-to {
+	opacity: 0;
 	opacity: 0;
 }
 </style>
